@@ -1,0 +1,28 @@
+.table {
+  .date-name p {
+    writing-mode: vertical-rl;
+    text-orientation: mixed;
+  }
+
+  td {
+    padding: 1px;
+    background-color: #fff;
+    text-align: center;
+
+    .red {
+      background-color: #ff0000;
+    }
+
+    .yellow {
+      background-color: #fff500;
+    }
+
+    .blue {
+      background-color: #00b2ff;
+    }
+
+    .gray {
+      background-color: #a4a4a2;
+    }
+  }
+}

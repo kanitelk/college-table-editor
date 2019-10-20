@@ -1,0 +1,32 @@
+.new-table {
+  display: flex;
+  flex-flow: column wrap;
+  padding: 1rem;
+  margin: 1rem;
+  background-color: #dedede;
+  border-radius: 5px;
+  min-width: 300px;
+
+  p.title {
+    font-weight: 600;
+  }
+
+  .field {
+    display: flex;
+    flex-flow: column wrap;
+    margin-top: 1rem;
+    margin-bottom: 1rem;
+
+    label {
+      font-size: 1.05rem;
+      margin-bottom: 10px;
+    }
+  }
+
+  button {
+    width: fit-content;
+    align-self: center;
+    border-radius: 50px !important;
+    margin: 1rem 0 !important;
+  }
+}
