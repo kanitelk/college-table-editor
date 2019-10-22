@@ -1,12 +1,13 @@
 const mongoose = require("mongoose");
 
 const PersonSchema = new mongoose.Schema({
+  id: Number,
   name: String,
   role: String
 });
 
 const DateValueSchema = new mongoose.Schema({
-  color: String,
+  personId: Number,
   data: {
     color: String,
     value: String

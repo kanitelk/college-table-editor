@@ -1,13 +1,27 @@
+.table-wrapper {
+  width: 90vw;
+}
+
 .table {
+  display: block;
+  margin: 1rem;
+  padding-bottom: 1rem;
+  overflow: scroll; /* Scrollbar are always visible */
+  overflow: auto; /* Scrollbar is displayed as it's needed */
+  overflow-x: auto;
+
   .date-name p {
     writing-mode: vertical-rl;
     text-orientation: mixed;
   }
 
-  td {
-    padding: 1px;
+  td,
+  th {
+    padding: 10px;
     background-color: #fff;
     text-align: center;
+    transition: all ease-in-out 0.3s;
+    border: 1px solid #fff;
 
     .red {
       background-color: #ff0000;
@@ -24,5 +38,16 @@
     .gray {
       background-color: #a4a4a2;
     }
+
+    &:hover {
+      background-color: rgb(238, 238, 238);
+      border: 1px solid white;
+      cursor: default;
+    }
+  }
+
+  .fixed {
+    // position: fixed;
+    // left: 5px;
   }
 }
