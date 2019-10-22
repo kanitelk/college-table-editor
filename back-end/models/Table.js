@@ -20,6 +20,11 @@ const DateSchema = new mongoose.Schema({
 });
 
 const schema = mongoose.Schema({
+  name: {
+    type: String,
+    index: true,
+    unique: true
+  },
   persons: [PersonSchema],
   dates: [DateSchema]
 });

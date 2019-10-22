@@ -23,22 +23,6 @@
     transition: all ease-in-out 0.3s;
     border: 1px solid #fff;
 
-    .red {
-      background-color: #ff0000;
-    }
-
-    .yellow {
-      background-color: #fff500;
-    }
-
-    .blue {
-      background-color: #00b2ff;
-    }
-
-    .gray {
-      background-color: #a4a4a2;
-    }
-
     &:hover {
       background-color: rgb(238, 238, 238);
       border: 1px solid white;
@@ -46,8 +30,19 @@
     }
   }
 
-  .fixed {
-    // position: fixed;
-    // left: 5px;
+  .red {
+    background-color: #eb5757 !important;
+  }
+
+  .yellow {
+    background-color: #f9f13e;
+  }
+
+  .blue {
+    background-color: #2f80ed;
+  }
+
+  .gray {
+    background-color: #a4a4a2;
   }
 }

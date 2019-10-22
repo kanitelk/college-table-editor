@@ -6,7 +6,54 @@ const HTTP = axios.create({
   baseURL: baseUrl
 });
 
-export const getTable = async id => {
-  let res = await HTTP.get(`table/${id}`);
+export const getTable = async name => {
+  let res = await HTTP.get(`table/${name}`);
+  return res;
+};
+
+export const newTable = async (name, startDate, endDate) => {
+  let res = await HTTP.post(`new`, {
+    name,
+    startDate,
+    endDate
+  });
+  return res;
+};
+
+export const setCell = async (tableName, date, userId, color, content) => {
+  let res = await HTTP.post(`editCell`, {
+    tableName,
+    date,
+    userId,
+    color,
+    content
+  });
+  return res;
+};
+
+export const addPerson = async (tableName, userName, role) => {
+  let res = await HTTP.post(`addPerson`, {
+    tableName,
+    userName,
+    role
+  });
+  return res;
+};
+
+export const editPerson = async (tableName, userId, userName, role) => {
+  let res = await HTTP.post(`addPerson`, {
+    tableName,
+    userId,
+    userName,
+    role
+  });
+  return res;
+};
+
+export const deletePerson = async (tableName, userId) => {
+  let res = await HTTP.post(`addPerson`, {
+    tableName,
+    userId
+  });
   return res;
 };

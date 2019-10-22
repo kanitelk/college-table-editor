@@ -2,22 +2,25 @@ import React, { useState, useEffect } from "react";
 import { useParams } from "react-router-dom";
 import "./Table.scss";
 import { getTable } from "../../services/http";
+import Cell from "./Cell";
+import { Loader } from "semantic-ui-react";
 
 function Table() {
   let { id } = useParams();
 
   const [state, setState] = useState({
     isLoading: true,
+    error: false,
     table: null
   });
 
   useEffect(() => {
     async function fetchData() {
-      let data = await getTable("5daddc4f2826441f80350439");
-      console.log(data.data);
-
+      let data = await getTable(id);
+      console.log(data.status);
       setState({
         isLoading: false,
+        error: false,
         table: data.data
       });
     }
@@ -42,10 +45,25 @@ function Table() {
       cells = state.table.persons.map(user => {
         let values = state.table.dates.map(value => {
           let r = value.values.findIndex(item => item.personId === user.id);
-          if (r === -1) return <td key={Math.random()}></td>;
+          if (r === -1)
+            return (
+              <Cell
+                key={Math.random()}
+                date={value.date}
+                personId={user.id}
+                user={user}
+              />
+            );
           else
             return (
-              <td key={value.values[r]._id}>{value.values[r].data.value}</td>
+              <Cell
+                key={value.values[r]._id}
+                valueId={value.values[r]._id}
+                content={value.values[r].data.value}
+                color={value.values[r].data.color}
+                date={value.date}
+                user={user}
+              />
             );
         });
         return (
@@ -72,28 +90,11 @@ function Table() {
     }
   };
 
-  const renderBody = () => {
-    if (state.isLoading === true) return null;
-    else {
-      let cells = state.table.persons.map((x, index) => {
-        return (
-          <tr key={x._id}>
-            <td>{x.role}</td>
-            <td>{x.name}</td>
-          </tr>
-        );
-      });
-      console.log();
-
-      return cells;
-    }
-  };
-
   return (
     <React.Fragment>
       <div className="table-wrapper">
-        <h2>Table id: {id}</h2>
-        <h3>Loading: {state.isLoading ? "true" : "false"}</h3>
+        <h2>{id}</h2>
+        <Loader active={state.isLoading && !state.error} />
         <table className="table">{renderTable()}</table>
       </div>
     </React.Fragment>

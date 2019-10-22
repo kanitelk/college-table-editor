@@ -7,94 +7,45 @@ router.get("/", (req, res) => {
   res.send("Hello");
 });
 
-router.get("/new", async (req, res) => {
-  let t1 = new Table({
-    persons: [
-      {
-        id: 1,
-        name: "Kirill",
-        role: "Front-End"
-      },
-      {
-        id: 2,
-        name: "Vita",
-        role: "Back-End"
-      }
-    ],
+router.post("/new", async (req, res) => {
+  d1 = new Date(req.body.startDate);
+  d2 = new Date(req.body.endDate);
+  let t = new Table({
+    name: req.body.name,
     dates: [
       {
-        date: "2019-08-09",
-        values: [
-          {
-            personId: 1,
-            data: {
-              color: "red",
-              value: "RD"
-            }
-          },
-          {
-            personId: 2,
-            data: {
-              color: "yellow",
-              value: "GR"
-            }
-          }
-        ]
+        date: d1,
+        values: []
       },
       {
-        date: "2019-08-11",
-        values: [
-          {
-            personId: 2,
-            data: {
-              color: "blue",
-              value: "123"
-            }
-          }
-        ]
-      },
-      {
-        date: "2019-08-12",
-        values: [
-          {
-            personId: 1,
-            data: {
-              color: "gray",
-              value: "RD"
-            }
-          },
-          {
-            personId: 2,
-            data: {
-              color: "yellow",
-              value: "GR"
-            }
-          }
-        ]
+        date: d2,
+        values: []
       }
-    ]
+    ],
+    persons: []
   });
 
-  let res1 = await t1.save();
-  res.json({
-    success: 1
-  });
-  console.log(res1);
+  try {
+    let res1 = await t.save();
+    res.json({
+      success: 1,
+      id: res1._id
+    });
+  } catch (error) {
+    res.status(409).send(error);
+  }
 });
 
-router.get("/table/:id", async (req, res) => {
-  let result;
-  try {
-    result = await Table.findOne({ _id: req.params.id });
-  } catch (error) {
+router.get("/table/:name", async (req, res) => {
+  let result = await Table.findOne({ name: req.params.name });
+  if (!result) {
     res.status(404).send("Table not found");
+    return;
   }
   res.send(initTable(result));
 });
 
 const initTable = table => {
-  //console.log(table);
-
   // ! DATES
   let res = {};
   res.dates = table.dates.sort((a, b) => new Date(a.date) - new Date(b.date));
