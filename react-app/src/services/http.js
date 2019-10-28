@@ -21,7 +21,7 @@ export const newTable = async (name, startDate, endDate) => {
 };
 
 export const setCell = async (tableName, date, userId, color, content) => {
-  let res = await HTTP.post(`editCell`, {
+  let res = await HTTP.post(`setCell`, {
     tableName,
     date,
     userId,
@@ -40,8 +40,8 @@ export const addPerson = async (tableName, userName, role) => {
   return res;
 };
 
-export const editPerson = async (tableName, userId, userName, role) => {
-  let res = await HTTP.post(`addPerson`, {
+export const editPerson = async (tableName, userName, userId, role) => {
+  let res = await HTTP.post(`editPerson`, {
     tableName,
     userId,
     userName,
@@ -51,7 +51,7 @@ export const editPerson = async (tableName, userId, userName, role) => {
 };
 
 export const deletePerson = async (tableName, userId) => {
-  let res = await HTTP.post(`addPerson`, {
+  let res = await HTTP.post(`deletePerson`, {
     tableName,
     userId
   });

@@ -1,32 +1,57 @@
 import React, { useState } from "react";
 import { Button, Modal, Dropdown, Input } from "semantic-ui-react";
 import "./Cell.scss";
+import { setCell } from "../../services/http";
 
-function Cell({ content, color, date, valueId, user }) {
+function Cell({ tableName, content = "", color = "", date, valueId, user }) {
   let dateString = new Date(date);
-  if (content === "RD") console.log(content, color, date, valueId, user);
+  if (content === "13") {
+    console.log(content, color, date, valueId, user);
+  }
 
-  const [modalState, setModalState] = useState(false);
+  const [state, setState] = useState({
+    visible: false,
+    color: color,
+    content: content
+  });
 
   const colorOptions = [
     { key: 1, text: "Красный", value: "red" },
     { key: 2, text: "Желтый", value: "yellow" },
     { key: 3, text: "Голубой", value: "blue" },
-    { key: 4, text: "Серый", value: "gray" }
+    { key: 4, text: "Серый", value: "gray" },
+    { key: 5, text: "Белый", value: "white" }
   ];
 
-  const save = () => {};
+  const save = async () => {
+    console.log(tableName, date, user.id, state.color, state.content);
+
+    let res = await setCell(
+      tableName,
+      date,
+      user.id,
+      state.color,
+      state.content
+    );
+    console.log(res);
+    setState({ ...state, visible: false });
+  };
 
   return (
     <React.Fragment>
-      <td onClick={() => setModalState(!modalState)} className={color}>
-        {content}
+      <td
+        onClick={() => setState({ ...state, visible: true })}
+        className={state.color}
+      >
+        {state.content}
       </td>
       <Modal
         className="cell-edit-modal"
         size="mini"
-        open={modalState}
-        onClose={() => setModalState(false)}
+        open={state.visible}
+        onClose={() =>
+          setState({ color: color, content: content, visible: false })
+        }
       >
         <Modal.Content>
           <h3>
@@ -35,20 +60,29 @@ function Cell({ content, color, date, valueId, user }) {
           <div className="field">
             <h4>Цвет</h4>
             <Dropdown
-              value={color}
+              value={state.color}
               placeholder="Цвет"
               options={colorOptions}
+              onChange={(e, data) => setState({ ...state, color: data.value })}
               selection
             />
           </div>
           <div className="field">
             <h4>Примечание</h4>
-            <Input type="text" value={content} placeholder="ВИ" maxLength="2" />
+            <Input
+              type="text"
+              onChange={e => setState({ ...state, content: e.target.value })}
+              value={state.content}
+              placeholder="ВИ"
+              maxLength="2"
+            />
           </div>
         </Modal.Content>
         <Modal.Actions>
-          <Button onClick={() => setModalState(false)}>Отмена</Button>
-          <Button onClick={save()} positive>
+          <Button onClick={() => setState({ ...state, visible: false })}>
+            Отмена
+          </Button>
+          <Button onClick={save} positive>
             Сохранить
           </Button>
         </Modal.Actions>

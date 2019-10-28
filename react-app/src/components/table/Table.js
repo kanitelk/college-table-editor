@@ -49,6 +49,7 @@ function Table() {
             return (
               <Cell
                 key={Math.random()}
+                tableName={id}
                 date={value.date}
                 personId={user.id}
                 user={user}
@@ -58,6 +59,7 @@ function Table() {
             return (
               <Cell
                 key={value.values[r]._id}
+                tableName={id}
                 valueId={value.values[r]._id}
                 content={value.values[r].data.value}
                 color={value.values[r].data.color}
