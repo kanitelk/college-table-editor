@@ -1,8 +1,8 @@
 import React from "react";
 import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "./App.scss";
-import NewTable from "./components/NewTable/NewTable";
-import Table from "./components/table/Table";
+import NewTable from "./components/table/NewTable/NewTable";
+import TableWrapper from "./components/table/TableWrapper";
 
 function App() {
   return (
@@ -12,7 +12,7 @@ function App() {
           <Route path="/new">
             <NewTable />
           </Route>
-          <Route path="/table/:id" children={<Table />} />
+          <Route path="/table/:tableName" children={<TableWrapper />} />
           <Route path="/">
             <Link to="/new">New table</Link>
           </Route>

@@ -1,27 +1,29 @@
 import React, { useState } from "react";
 import { Button, Modal, Dropdown, Input } from "semantic-ui-react";
 import "./Cell.scss";
-import { setCell } from "../../services/http";
+import {setCell} from "../../../../services/http";
+
+const colorOptions = [
+  { key: 1, text: "Красный", value: "red" },
+  { key: 2, text: "Желтый", value: "yellow" },
+  { key: 3, text: "Голубой", value: "blue" },
+  { key: 4, text: "Серый", value: "gray" },
+  { key: 5, text: "Белый", value: "white" }
+];
 
 function Cell({ tableName, content = "", color = "", date, valueId, user }) {
   let dateString = new Date(date);
-  if (content === "13") {
-    console.log(content, color, date, valueId, user);
-  }
+
+  // if (content === "13") {
+  //   console.log(content, color, date, valueId, user);
+  // }
 
   const [state, setState] = useState({
+    isDisabled: dateString.toString().split(' ')[0] === 'Sun',
     visible: false,
     color: color,
     content: content
   });
-
-  const colorOptions = [
-    { key: 1, text: "Красный", value: "red" },
-    { key: 2, text: "Желтый", value: "yellow" },
-    { key: 3, text: "Голубой", value: "blue" },
-    { key: 4, text: "Серый", value: "gray" },
-    { key: 5, text: "Белый", value: "white" }
-  ];
 
   const save = async () => {
     console.log(tableName, date, user.id, state.color, state.content);
@@ -37,6 +39,11 @@ function Cell({ tableName, content = "", color = "", date, valueId, user }) {
     setState({ ...state, visible: false });
   };
 
+  if (state.isDisabled) {
+    return (
+        <td className={'red'}></td>
+    )
+  } else
   return (
     <React.Fragment>
       <td
@@ -79,7 +86,11 @@ function Cell({ tableName, content = "", color = "", date, valueId, user }) {
           </div>
         </Modal.Content>
         <Modal.Actions>
-          <Button onClick={() => setState({ ...state, visible: false })}>
+          <Button
+            onClick={() =>
+              setState({ color: color, content: content, visible: false })
+            }
+          >
             Отмена
           </Button>
           <Button onClick={save} positive>

@@ -3,7 +3,7 @@ import { Redirect } from "react-router-dom";
 import "./NewTable.scss";
 
 import { Input, Button } from "semantic-ui-react";
-import { newTable } from "../../services/http";
+import {newTable} from "../../../services/http";
 
 class NewTable extends Component {
   constructor(props) {

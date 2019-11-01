@@ -1,4 +1,4 @@
-.table-wrapper {
+.table-container {
   width: 90vw;
 }
 
@@ -9,6 +9,11 @@
   overflow: scroll; /* Scrollbar are always visible */
   overflow: auto; /* Scrollbar is displayed as it's needed */
   overflow-x: auto;
+
+  .fixed {
+    display: block;
+    width: 200px;
+  }
 
   .date-name p {
     writing-mode: vertical-rl;
