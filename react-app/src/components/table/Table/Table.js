@@ -2,6 +2,7 @@ import React from "react";
 import "./Table.scss";
 import Cell from "./Cell/Cell";
 import {Button} from "semantic-ui-react";
+import AddRow from "../AddRow/AddRow";
 
 function Table({table, tableName, isLoading}) {
 
@@ -79,7 +80,7 @@ function Table({table, tableName, isLoading}) {
             <div className="table-container">
                 <table className="table">{renderTable()}</table>
             </div>
-            <Button color='green'>Добавить строку</Button>
+            <AddRow tableName={tableName} />
         </React.Fragment>
     );
 }
