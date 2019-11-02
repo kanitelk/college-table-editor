@@ -155,7 +155,7 @@ router.post("/addPerson", async (req, res) => {
   let t = await Table.findOne({ name: tableName });
   let nextId = 1;
   t.persons.forEach(person => {
-    if (person.id >= nextId) nextId = personId + 1;
+    if (person.id >= nextId) nextId = person.id + 1;
   });
   console.log(nextId);
   t.persons.push({

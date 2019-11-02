@@ -1,10 +1,19 @@
-import React from "react";
+import React, {useState} from "react";
 import "./Table.scss";
 import Cell from "./Cell/Cell";
 import {Button} from "semantic-ui-react";
 import AddRow from "../AddRow/AddRow";
 
 function Table({table, tableName, isLoading}) {
+    const [hoverState, setHoverState] = useState({
+        userId: null,
+        isHover: false
+    });
+
+    const handleHoverState = (userId, isHover) => {
+        console.log(123)
+        setHoverState({userId: userId, isHover: isHover})
+    }
 
     const renderTable = () => {
         if (isLoading === true) return null;
@@ -49,8 +58,14 @@ function Table({table, tableName, isLoading}) {
                         );
                 });
                 return (
-                    <tr key={user.id}>
-                        <td className="fixed">{user.role}</td>
+                    <tr key={user._id}>
+                        <td
+                            onMouseEnter={() => handleHoverState(user.id, true)}
+                            onMouseLeave={() => handleHoverState(null, false)}
+                            className="fixed">
+                                {user.role}
+                            {hoverState.isHover && (user.id === hoverState.userId) &&  <Button circular icon='settings'></Button>}
+                        </td>
                         <td>{user.name}</td>
                         {values}
                     </tr>

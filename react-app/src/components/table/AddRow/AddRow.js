@@ -59,7 +59,7 @@ export default function AddRow ({tableName}) {
                     >
                         Отмена
                     </Button>
-                    <Button on onClick={save} positive>
+                    <Button onClick={save} positive>
                         Добавить
                     </Button>
                 </Modal.Actions>
