@@ -57,3 +57,8 @@ export const deletePerson = async (tableName, userId) => {
   });
   return res;
 };
+
+export const getAllTables = async () => {
+  let res = await HTTP.get('tables')
+  return res;
+};

@@ -135,11 +135,12 @@ router.post("/setCell", async (req, res) => {
 
 router.post("/editPerson", async (req, res) => {
   const { tableName, userId, userName, role } = req.body;
+
   let t = await Table.findOne({ name: tableName });
   let personIndex = t.persons.findIndex(x => x.id === +userId);
   if (personIndex === -1) res.status(409).send("Person not found");
   else {
-    t.persons[personIndex].userName = userName;
+    t.persons[personIndex].name = userName;
     t.persons[personIndex].role = role;
     try {
       await t.save();
@@ -171,6 +172,23 @@ router.post("/addPerson", async (req, res) => {
   }
 });
 
+router.post("/deletePerson", async (req, res) => {
+  const { tableName, userId, userName, role } = req.body;
+
+  let t = await Table.findOne({ name: tableName });
+  let personIndex = t.persons.findIndex(x => x.id === +userId);
+  if (personIndex === -1) res.status(409).send("Person not found");
+  else {
+    t.persons.splice(personIndex, 1);
+    try {
+      await t.save();
+      res.send("Person deleted");
+    } catch (error) {
+      res.status(409).send("Error while deleting person");
+    }
+  }
+});
+
 router.get("/table/:name", async (req, res) => {
   let result = await Table.findOne({ name: req.params.name });
   if (!result) {
@@ -178,6 +196,21 @@ router.get("/table/:name", async (req, res) => {
     return;
   }
   res.send(initTable(result));
+});
+
+router.get("/tables", async (req, res) => {
+  let result = await Table.find({});
+  if (!result) {
+    res.status(404).send("Tables not found");
+    return;
+  }
+  result = result.map(table => {
+    return {
+      name: table.name,
+      persons: table.persons.length
+    };
+  });
+  res.send(result);
 });
 
 module.exports = router;

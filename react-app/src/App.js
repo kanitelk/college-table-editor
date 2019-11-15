@@ -3,6 +3,7 @@ import { BrowserRouter as Router, Switch, Route, Link } from "react-router-dom";
 import "./App.scss";
 import NewTable from "./components/table/NewTable/NewTable";
 import TableWrapper from "./components/table/TableWrapper";
+import TableList from "./components/TableList/TableList";
 
 function App() {
   return (
@@ -15,6 +16,7 @@ function App() {
           <Route path="/table/:tableName" children={<TableWrapper />} />
           <Route path="/">
             <Link to="/new">New table</Link>
+            <TableList />
           </Route>
         </Switch>
       </div>

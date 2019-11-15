@@ -1,19 +1,55 @@
 import React, {useState} from "react";
 import "./Table.scss";
 import Cell from "./Cell/Cell";
-import {Button} from "semantic-ui-react";
+import {Button, Confirm, Icon} from "semantic-ui-react";
+import ContentEditable from 'react-contenteditable';
 import AddRow from "../AddRow/AddRow";
+import {deletePerson, editPerson} from "../../../services/http";
+import Snackbar from "@material-ui/core/Snackbar";
 
-function Table({table, tableName, isLoading}) {
+function Table({table, tableName, isLoading, changeName, delRow, update}) {
+    const [state, setState] = useState({
+        snackOpen: false,
+        snackText: ''
+    })
+
     const [hoverState, setHoverState] = useState({
         userId: null,
-        isHover: false
+        isHover: false,
+        popup: false
     });
 
-    const handleHoverState = (userId, isHover) => {
-        console.log(123)
-        setHoverState({userId: userId, isHover: isHover})
+    const handleHoverState = (userId) => {
+        console.log('*** handle hover')
+        let curId = hoverState.userId;
+        if (curId === userId) {
+            setHoverState({...hoverState, userId: null, isHover: false})
+        } else {
+            setHoverState({...hoverState, userId: userId, isHover: true})
+        }
     }
+
+    const deleteRow = async () => {
+        await deletePerson(tableName, hoverState.userId);
+        delRow(hoverState.userId)
+        setHoverState({userId: null, popup: false, isHover: false});
+        setState({...state, snackOpen: true, snackText: 'Строка удалена'})
+    }
+
+    const handleUserNameChange = (e, user) => {
+        changeName(user.id, e.target.value);
+        savePersonName(e.target.value, user);
+    }
+
+    const blurUserName = (e, user) => {
+        console.log(e, user)
+    }
+
+    const savePersonName = async (name, user) => {
+        let res = await editPerson(tableName, name, user.id, user.role);
+        setState({...state, snackOpen: true, snackText: 'Строка сохранена'})
+    }
+
 
     const renderTable = () => {
         if (isLoading === true) return null;
@@ -60,13 +96,21 @@ function Table({table, tableName, isLoading}) {
                 return (
                     <tr key={user._id}>
                         <td
-                            onMouseEnter={() => handleHoverState(user.id, true)}
-                            onMouseLeave={() => handleHoverState(null, false)}
+                            onClick={() => handleHoverState(user.id)}
                             className="fixed">
                                 {user.role}
-                            {hoverState.isHover && (user.id === hoverState.userId) &&  <Button circular icon='settings'></Button>}
+                            {hoverState.isHover && (user.id === hoverState.userId) &&
+                            <Icon onClick={(e) => {
+                                setHoverState({...hoverState, popup: true})
+                                e.stopPropagation();
+                            }} name='close' />}
                         </td>
-                        <td>{user.name}</td>
+                        <ContentEditable
+                            html={user.name}
+                            tagName='td'
+                            onChange={(e) => handleUserNameChange(e, user)}
+                            onBlur={(e) => blurUserName(e, user)}
+                        />
                         {values}
                     </tr>
                 );
@@ -92,10 +136,27 @@ function Table({table, tableName, isLoading}) {
 
     return (
         <React.Fragment>
+            <AddRow tableName={tableName} update={update} />
             <div className="table-container">
                 <table className="table">{renderTable()}</table>
             </div>
-            <AddRow tableName={tableName} />
+            <Confirm
+                open={hoverState.popup}
+                onCancel={() => setHoverState({...hoverState, popup: false})}
+                onConfirm={() => deleteRow()}
+                content='Вы действительно хотите удалить строку?'
+            />
+
+            <Snackbar
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                }}
+                open={state.snackOpen}
+                autoHideDuration={1500}
+                onClose={() => setState({...state, snackOpen: false, snackText: ''})}
+                message={<span>{state.snackText}</span>}
+            />
         </React.Fragment>
     );
 }

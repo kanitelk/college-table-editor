@@ -5,14 +5,38 @@
   width: 100%;
   padding: 1rem;
 
+  .name {
+    flex: 1;
+  }
+
   .link {
     display: flex;
     flex-flow: row nowrap;
     align-items: baseline;
     justify-content: center;
+    flex: 1;
+
+    .ui {
+      width: 100%;
+    }
 
     h3 {
       margin-right: 15px;
     }
   }
+
+  .actions {
+    display: flex;
+    flex: 1;
+    justify-content: flex-end;
+
+    button {
+      border-radius: 50px !important;
+
+      &:first-of-type {
+        margin-right: 2rem;
+      }
+    }
+  }
+
 }

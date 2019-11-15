@@ -1,23 +1,28 @@
 import React, {useState} from 'react';
 import {Button, Dropdown, Input, Modal} from "semantic-ui-react";
 import {addPerson} from "../../../services/http";
+import './AddRow.scss'
+import Snackbar from "@material-ui/core/Snackbar";
 
-export default function AddRow ({tableName}) {
+export default function AddRow ({tableName, update}) {
     const [state, setState] = useState({
         isOpen: false,
         userName: '',
-        role: ''
+        role: '',
+        snackOpen: false,
+        snackText: ''
     })
 
     const save = async () => {
         let res = await addPerson(tableName, state.userName, state.role);
-        setState({ userName: '', role: '', isOpen: false });
+        setState({ userName: '', role: '', isOpen: false, snackOpen: true, snackText: 'Строка добавлена' });
+        update();
         console.log(res)
     }
 
     return (
         <React.Fragment>
-            <Button onClick={() => setState({...state, isOpen: true})} color='green'>Добавить строку</Button>
+            <Button className="add-row-btn" onClick={() => setState({...state, isOpen: true})} color='green'>Добавить строку</Button>
             <Modal
                 className="cell-edit-modal"
                 size="mini"
@@ -64,6 +69,17 @@ export default function AddRow ({tableName}) {
                     </Button>
                 </Modal.Actions>
             </Modal>
+
+            <Snackbar
+                anchorOrigin={{
+                    vertical: 'bottom',
+                    horizontal: 'center',
+                }}
+                open={state.snackOpen}
+                autoHideDuration={3000}
+                onClose={() => setState({...state, snackOpen: false, snackText: ''})}
+                message={<span>{state.snackText}</span>}
+            />
         </React.Fragment>
 
     )
