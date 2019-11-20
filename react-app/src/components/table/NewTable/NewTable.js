@@ -121,6 +121,7 @@ class NewTable extends Component {
           <Button disabled={
               this.state.startDate === '' ||
               this.state.endDate === '' ||
+              this.state.subGroup === '' ||
               this.state.groupName.match(/\d\d[А-Я]{1,4}\d$/) === null
           }
                   type="submit" primary>
