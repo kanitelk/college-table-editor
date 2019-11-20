@@ -8,6 +8,8 @@ import {deletePerson, editPerson} from "../../../services/http";
 import Snackbar from "@material-ui/core/Snackbar";
 
 function Table({table, tableName, isLoading, changeName, delRow, update}) {
+    document.title = tableName;
+
     const [state, setState] = useState({
         snackOpen: false,
         snackText: ''

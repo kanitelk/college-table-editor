@@ -21,30 +21,27 @@ export default function TableList () {
             setState({
                 isLoading: false,
                 error: false,
-                table: data.data
+                tables: data.data
             });
         } catch (error) {
             setState({
                 isLoading: false,
                 error: error,
-                table: null
+                tables: null
             })
             alert('При загрузке таблиц произошла ошибка')
         }
     }
 
-    const getTables = () => state.tables.map(x => <div>
-            {x.name}
-            {x.persons}
-        </div>
+    const getTables = () => state.tables.map(x => <a href={`./table/${x.name}`} key={x.name}>
+                {x.name}
+            </a>
     )
 
     return (
         <React.Fragment>
-            <div className="table-list">
-                <Loader active={state.isLoading} />
-                {/*{!state.isLoading && !state.error && getTables()}*/}
-            </div>
+            <Loader active={state.isLoading} />
+            {state.isLoading === false && state.tables !== null && <div className="table-list">{getTables()}</div>}
         </React.Fragment>
     )
 }
