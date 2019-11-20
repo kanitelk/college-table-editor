@@ -15,7 +15,7 @@ function App() {
           </Route>
           <Route path="/table/:tableName" children={<TableWrapper />} />
           <Route path="/">
-            <Link to="/new">New table</Link>
+            <NewTable />
             <TableList />
           </Route>
         </Switch>

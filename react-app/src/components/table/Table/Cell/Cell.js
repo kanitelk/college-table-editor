@@ -13,6 +13,19 @@ const colorOptions = [
   { key: 5, text: "Нет", value: "white" }
 ];
 
+const statusOptions = [
+  { key: 1, text: "Дизайн (Д)", value: "Д" },
+  { key: 2, text: "Варианты использования (ВИ)", value: "ВИ" },
+  { key: 3, text: "Требования (ТР)", value: "ТР" },
+  { key: 4, text: "Архитектура (АР)", value: "АР" },
+  { key: 5, text: "Алгоритмы (АЛ)", value: "АЛ" },
+  { key: 6, text: "Разработка тестов (РТ)", value: "РТ" },
+  { key: 7, text: "Тестирование (Т)", value: "Т" },
+  { key: 8, text: "Кодирование (К)", value: "К" },
+  { key: 9, text: "Руководство пользователя (РП)", value: "РП" },
+  { key: 10, text: "Проект (П)", value: "П" },
+];
+
 function Cell({ tableName, content = "", color = "", date, valueId, user }) {
   let dateString = new Date(date);
 
@@ -76,12 +89,12 @@ function Cell({ tableName, content = "", color = "", date, valueId, user }) {
           </div>
           <div className="field">
             <h4>Примечание</h4>
-            <Input
-              type="text"
-              onChange={e => setState({ ...state, content: e.target.value })}
-              value={state.content}
-              placeholder="ВИ"
-              maxLength="2"
+            <Dropdown
+                value={state.content}
+                placeholder="ВИ"
+                options={statusOptions}
+                onChange={(e, data) => setState({ ...state, content: data.value })}
+                selection
             />
           </div>
         </Modal.Content>

@@ -86,6 +86,8 @@ class NewTable extends Component {
               type="text"
               value={this.state.groupName}
               onChange={this.handleGroupChange}
+              error={this.state.groupName !== '' && this.state.groupName.match(/\d\d[А-Я]{1,4}\d$/) === null}
+              placeholder={"17ИСТ4"}
             />
           </div>
           <div className="field">
@@ -116,7 +118,12 @@ class NewTable extends Component {
               icon="calendar"
             />
           </div>
-          <Button type="submit" primary>
+          <Button disabled={
+              this.state.startDate === '' ||
+              this.state.endDate === '' ||
+              this.state.groupName.match(/\d\d[А-Я]{1,4}\d$/) === null
+          }
+                  type="submit" primary>
             Создать
           </Button>
         </form>

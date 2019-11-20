@@ -57,15 +57,27 @@ function Table({table, tableName, isLoading, changeName, delRow, update}) {
 
             let dates = table.dates.map(x  => {
                 let y = new Date(x.date);
-
-                return (
-                        <td className="date-name" key={x.date}>
+                let isDisabled = y.toString().split(' ')[0] === 'Sun';
+                if (isDisabled) return (
+                        <td className="date-name inactive" key={x.date}>
                             <p>{y.toLocaleDateString()}</p>
                         </td>
                 );
+                else return (
+                    <td className="date-name" key={x.date}>
+                        <p>{y.toLocaleDateString()}</p>
+                    </td>
+                )
             });
 
-            let daysNumbers = table.dates.map((x, index) => <td key={index}>{index + 1}</td>)
+            let daysNumbers = table.dates.map((x, index) => {
+                let dateString = new Date(x.date);
+                let isDisabled = dateString.toString().split(' ')[0] === 'Sun';
+                if (isDisabled) {
+                    return <td className="inactive" key={index}>{index + 1}</td>
+                } else
+                return <td key={index}>{index + 1}</td>
+            })
 
             let cells = table.persons.map(user => {
                 let values = table.dates.map(value => {
