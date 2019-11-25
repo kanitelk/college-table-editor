@@ -1,6 +1,6 @@
 const config = {
-  db: "mongodb://localhost:27017/admin",
-  port: process.env.PORT || 3003
+  db: "mongodb://root:VKbotv4AK74_x51*12gta@82.202.221.175:27105/scoring",
+  port: 3001
 };
 
 module.exports = config;

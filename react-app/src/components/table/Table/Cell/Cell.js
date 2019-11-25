@@ -54,7 +54,7 @@ function Cell({ tableName, content = "", color = "", date, valueId, user }) {
 
   if (state.isDisabled) {
     return (
-        <td className={'red'}></td>
+        <td className={'white inactive'}></td>
     )
   } else
   return (

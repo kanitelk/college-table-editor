@@ -22,6 +22,7 @@
 
     h3 {
       margin-right: 15px;
+      font-weight: 600;
     }
   }
 
@@ -32,6 +33,8 @@
 
     button {
       border-radius: 50px !important;
+      height: 40px;
+      width: 160px;
 
       &:first-of-type {
         margin-right: 2rem;

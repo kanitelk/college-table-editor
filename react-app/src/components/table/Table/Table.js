@@ -134,12 +134,9 @@ function Table({table, tableName, isLoading, changeName, delRow, update}) {
                 <React.Fragment>
                     <thead>
                     <tr>
-                        <td rowSpan={2}>Вид деятельности</td>
-                        <td rowSpan={2}>Ответственный</td>
+                        <td>Вид деятельности</td>
+                        <td>Ответственный</td>
                         {dates}
-                    </tr>
-                    <tr>
-                      {daysNumbers}
                     </tr>
                     </thead>
                     <tbody>{cells}</tbody>

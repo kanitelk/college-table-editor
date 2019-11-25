@@ -57,5 +57,9 @@
 
   .inactive {
     color: #9c9c9c;
+
+    &:hover {
+      background-color: unset !important;
+    }
   }
 }

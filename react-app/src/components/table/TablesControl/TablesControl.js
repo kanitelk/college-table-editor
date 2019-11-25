@@ -21,6 +21,7 @@ export default function TablesControl ({tableName}) {
                     <h2>{tableName}</h2>
                 </div>
                 <div className="link">
+                    <h3>Ссылка</h3>
                     <Input
                         value={document.location.href}
                         placeholder="Название таблицы..." type="text" />
