@@ -24,9 +24,10 @@ const statusOptions = [
   { key: 8, text: "Кодирование (К)", value: "К" },
   { key: 9, text: "Руководство пользователя (РП)", value: "РП" },
   { key: 10, text: "Проект (П)", value: "П" },
+  { key: 11, text: "Нет", value: "" },
 ];
 
-function Cell({ tableName, content = "", color = "", date, valueId, user }) {
+function Cell({ tableName, content = "", color = "gray", date, valueId, user }) {
   let dateString = new Date(date);
 
   const [state, setState] = useState({

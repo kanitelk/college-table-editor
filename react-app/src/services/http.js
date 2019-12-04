@@ -58,6 +58,13 @@ export const deletePerson = async (tableName, userId) => {
   return res;
 };
 
+export const deleteTable = async (tableName) => {
+  let res = await HTTP.post(`deleteTable`, {
+    tableName
+  });
+  return res;
+};
+
 export const getAllTables = async () => {
   let res = await HTTP.get('tables')
   return res;

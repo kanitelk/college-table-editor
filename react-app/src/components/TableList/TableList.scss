@@ -4,4 +4,16 @@
   flex-flow: column wrap;
   min-width: 300px;
   padding: 0 20px;
+
+  .table-item {
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: space-between;
+    padding-top: 2px;
+    padding-bottom: 2px;
+
+    &:hover {
+      background-color: rgba(153, 185, 255, 0.68);
+    }
+  }
 }

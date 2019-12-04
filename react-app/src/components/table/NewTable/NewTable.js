@@ -86,7 +86,9 @@ class NewTable extends Component {
               type="text"
               value={this.state.groupName}
               onChange={this.handleGroupChange}
-              error={this.state.groupName !== '' && this.state.groupName.match(/\d\d[А-Я]{1,4}\d?$/) === null}
+              minLength={4}
+              maxLength={10}
+              error={this.state.groupName !== '' && this.state.groupName.match(/[А-Я0-9]{4,10}?$/) === null}
               placeholder={"17ИСТ4"}
             />
           </div>
@@ -122,7 +124,7 @@ class NewTable extends Component {
               this.state.startDate === '' ||
               this.state.endDate === '' ||
               this.state.subGroup === '' ||
-              this.state.groupName.match(/\d\d[А-Я]{1,4}\d?$/) === null
+              this.state.groupName.match(/[А-Я0-9]{4,10}?$/) === null
           }
                   type="submit" primary>
             Создать

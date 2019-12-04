@@ -56,7 +56,7 @@ router.post("/new", async (req, res) => {
       {
         id: 7,
         name: "",
-        role: "Тестировние"
+        role: "Тестирование"
       },
       {
         id: 8,
@@ -211,6 +211,16 @@ router.get("/tables", async (req, res) => {
     };
   });
   res.send(result);
+});
+
+router.post("/deleteTable", async (req, res) => {
+  let result = await Table.remove({ name: req.body.tableName });
+  if (!result) {
+    res.status(404).send("Table not found");
+    return;
+  } else {
+    res.send("Table deleted");
+  }
 });
 
 module.exports = router;

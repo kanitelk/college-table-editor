@@ -1,13 +1,15 @@
 import React, {useState, useEffect} from 'react';
 import './TableList.scss';
-import {getAllTables, getTable} from "../../services/http";
-import {Loader} from "semantic-ui-react";
+import {deleteTable, getAllTables, getTable} from "../../services/http";
+import {Confirm, Icon, Loader} from "semantic-ui-react";
 
 export default function TableList () {
     const [state, setState] = useState({
         isLoading: false,
         error: null,
         tables: null,
+        showConfirm: false,
+        toDelete: null
     });
 
     useEffect(() => {
@@ -33,15 +35,36 @@ export default function TableList () {
         }
     }
 
-    const getTables = () => state.tables.map(x => <a href={`./table/${x.name}`} key={x.name}>
-                {x.name}
-            </a>
+    const delTable = async () => {
+        let res = await deleteTable(state.toDelete);
+        setState({...state, showConfirm: false})
+        await fetchTables();
+        alert(`Таблица ${state.toDelete} удалена`)
+    }
+
+    const getTables = () => state.tables.map(x =>
+        <div className="table-item" key={x.name}>
+            <a href={`./table/${x.name}`}>
+            {x.name}
+        </a>
+            <Icon name="close" onClick={() => {
+                setState({...state, showConfirm: true, toDelete: x.name})
+            }} />
+        </div>
     )
 
     return (
         <React.Fragment>
             <Loader active={state.isLoading} />
             {state.isLoading === false && state.tables !== null && <div className="table-list">{getTables()}</div>}
+
+            <Confirm
+                open={state.showConfirm}
+                onCancel={() => setState({...state, showConfirm: false})}
+                onConfirm={() => delTable()}
+                content='Вы действительно хотите удалить таблицу?'
+            />
+
         </React.Fragment>
     )
 }
